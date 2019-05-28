@@ -45,7 +45,7 @@ public class mobGenerator : MonoBehaviour {
             SceneManager.LoadScene("StageScene");
             count = 0;
             GameDirector.HP = 10;
-            GameObject director = GameObject.Find("GameDirector");
+            //GameObject director = GameObject.Find("GameDirector");
         }
     }
 }

@@ -12,7 +12,6 @@ public class RankingGet : MonoBehaviour
     TcpClient m_Client;
     StreamReader m_Read;
     StreamWriter m_Write;
-    BinaryReader binaryReader;
     private Thread m_thReader;
 
     bool m_bConnect;
@@ -30,6 +29,21 @@ public class RankingGet : MonoBehaviour
         fileName = rankPath + "/ranking.txt";
 
         Connect();
+    }
+
+    private void OnApplicationQuit()
+    {
+        m_Write.WriteLine("Disconnect");
+        m_Write.Flush();
+        if (!m_bConnect)
+            return;
+
+        m_bConnect = false;
+
+        m_Read.Close();
+        m_Write.Close();
+        m_Stream.Close();
+        m_thReader.Abort();
     }
 
     public void ShowName()
@@ -57,7 +71,7 @@ public class RankingGet : MonoBehaviour
 
         try
         {
-            m_Client.Connect(IPAddress.Parse("127.0.0.1"), 7777);
+            m_Client.Connect(IPAddress.Parse("35.221.78.134"/*"127.0.0.1"*/), 7777);
         }
         catch
         {
@@ -70,7 +84,6 @@ public class RankingGet : MonoBehaviour
 
         m_Read = new StreamReader(m_Stream);
         m_Write = new StreamWriter(m_Stream);
-        binaryReader = new BinaryReader(m_Stream);
 
         m_thReader = new Thread(new ThreadStart(Receive));
         m_thReader.Start();
@@ -85,8 +98,9 @@ public class RankingGet : MonoBehaviour
             receive = m_Read.ReadLine();
             if (receive.Equals("Latest"))
             {
-                //Insert("PJH", 30.1222f);
-                Rankcheck(13f);
+                Debug.Log("Receive_Latest");
+                Insert("PJH", 34.12232f);
+                //Rankcheck(13f);
                 //Rank file in client is latest version. Change Scene to ranking.
             }
             else if (receive.Equals("Old"))
@@ -103,16 +117,19 @@ public class RankingGet : MonoBehaviour
     private void Receive_old()
     {
         Debug.Log("Receive_old");
-        File.Delete(fileName);
-        FileStream fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write);
+        FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Write);
+        StreamWriter sw = new StreamWriter(fs);
 
-        BinaryWriter bw = new BinaryWriter(fileStream);
+        string str;// = m_Read.ReadLine();
+        //Debug.Log(str);
+        while (!(str = m_Read.ReadLine()).Equals("end"))
+        {
+            //Debug.Log(str);
+            sw.WriteLine(str);
+        }
 
-        byte[] buf = binaryReader.ReadBytes(1024);
-        bw.Write(buf);
-
-        bw.Close();
-        fileStream.Close();
+        sw.Close();
+        fs.Close();
     }
 
     public void Rankcheck(float score)

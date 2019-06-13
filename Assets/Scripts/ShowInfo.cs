@@ -28,6 +28,7 @@ public class ShowInfo : MonoBehaviour
 
     void Start()
     {
+        call.callRankCheck(0);
         userName = (System.Security.Principal.WindowsIdentity.GetCurrent().Name).Split('\\')[1];
         string rankPath = "C:/Users/" + userName + "/RhinoCrash";
         

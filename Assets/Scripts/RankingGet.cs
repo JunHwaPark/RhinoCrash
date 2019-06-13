@@ -29,11 +29,20 @@ public class RankingGet : MonoBehaviour
 
     private void Awake()
     {
-        DontDestroyOnLoad(gameObject);
+        
     }
 
     private void Start()
     {
+        GameObject rg = GameObject.Find("socket");
+        if(rg == gameObject)
+        {
+            Debug.Log("ddddddddddd");
+        }
+        else
+        {
+            return;
+        }
         //Execute in windows.bring user's name
         userName = (System.Security.Principal.WindowsIdentity.GetCurrent().Name).Split('\\')[1];
         string rankPath = "C:/Users/" + userName + "/RhinoCrash";
@@ -41,7 +50,7 @@ public class RankingGet : MonoBehaviour
         if (!di.Exists)
             di.Create();
         fileName = rankPath + "/ranking.txt";
-
+        DontDestroyOnLoad(gameObject);
         Connect();
     }
 

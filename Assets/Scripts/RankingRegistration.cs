@@ -107,11 +107,19 @@ public class RankingRegistration : MonoBehaviour
 
     }
 
-    //public void sendInfo()
-    //{
-    //    RankingGet rg = GameObject.Find("RankingGet").GetComponent<RankingGet>();
-    //    Debug.Log("i'm silhang");
-    //    rg.Insert(Name, PlayerController.score);
-    //}
+//<<<<<<< HEAD
+//    //public void sendInfo()
+//    //{
+//    //    RankingGet rg = GameObject.Find("RankingGet").GetComponent<RankingGet>();
+//    //    Debug.Log("i'm silhang");
+//    //    rg.Insert(Name, PlayerController.score);
+//    //}
+//=======
+//    public void sendInfo()
+//    {
+//        //Debug.Log("i'm silhang");
+//        //rg.Insert(Name, PlayerController.score);
+//    }
+//>>>>>>> 06e9424edf52c31653288d788fa4290e41288144
 
 }

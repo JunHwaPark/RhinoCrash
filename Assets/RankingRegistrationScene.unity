@@ -2404,7 +2404,6 @@ GameObject:
   - component: {fileID: 1900690848}
   - component: {fileID: 1900690847}
   - component: {fileID: 1900690850}
-  - component: {fileID: 1900690851}
   - component: {fileID: 1900690852}
   m_Layer: 5
   m_Name: RegistrationBtn
@@ -2544,18 +2543,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c5023d8fb627f34291cce0f8704bfef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1900690851
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1900690845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 504a3aa4a336ba744a6d6a640b12ab05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1900690852

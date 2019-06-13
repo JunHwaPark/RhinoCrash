@@ -49,7 +49,7 @@ public class mobGenerator : MonoBehaviour {
             GameDirector.HP = 10;
             //GameObject director = GameObject.Find("GameDirector");
 
-            //SceneManager.LoadScene("EndingScene"); //이거 나중에 지워야해
+            SceneManager.LoadScene("EndingScene"); //이거 나중에 지워야해
         }
 
         //이거나중에 코드 풀어줘야해

@@ -12,7 +12,8 @@ public class GameDirector : MonoBehaviour {
     GameObject skillGauge;
     public GameObject playerRhino;
     public static int stage = 0;
-    public static int HP = 10; 
+    public static int HP = 10;
+    public static float hpGaugefill = 1f;
 
     public static int skill = 0; //for count yellow heart
 
@@ -27,6 +28,7 @@ public class GameDirector : MonoBehaviour {
 
         //rend = GetComponent<Renderer>();
         //rend.material.color = new Color(rend.material.color.r, rend.material.color.g, rend.material.color.b, 0f);
+        this.hpGauge.GetComponent<Image>().fillAmount = GameDirector.hpGaugefill;
     }
 	
     public void changeColor()
@@ -45,6 +47,7 @@ public class GameDirector : MonoBehaviour {
         this.hpGauge.GetComponent<Image>().fillAmount -= 0.1f;
         this.skillGauge.GetComponent<Image>().fillAmount += 0.125f;
         GameDirector.HP--;
+        GameDirector.hpGaugefill -= 0.1f;
 
         SoundManager_GameScene.instance.PlaySE("Stump"); //효과음 넣기
 
@@ -80,6 +83,8 @@ public class GameDirector : MonoBehaviour {
 
         SceneManager.LoadScene("DeadScene");
         SoundManager_GameScene.instance.PlaySE("Death"); //죽으면 소리날거
+
+        GameDirector.hpGaugefill = 1f;
         
     }
 

@@ -62,15 +62,18 @@ public class BossController : MonoBehaviour
         float r1 = 2.2f; //몹 반경
         float r2 = 1.0f; //플레이어 반경
 
-        if (d < r1 + r2)
+        if (!SkillController.skillOn)
         {
-            //충돌시 몹을 소멸시킨다.
-            Destroy(gameObject);
-            
+            if (d < r1 + r2)
+            {
+                //충돌시 몹을 소멸시킨다.
+                Destroy(gameObject);
 
-            //감독 스크립트에 플레이어와 몹이 충돌했다고 전달
-            GameObject director = GameObject.Find("GameDirector");
-            director.GetComponent<GameDirector>().DecreaseHp();
+
+                //감독 스크립트에 플레이어와 몹이 충돌했다고 전달
+                GameObject director = GameObject.Find("GameDirector");
+                director.GetComponent<GameDirector>().DecreaseHp();
+            }
         }
 
         if(GameDirector.HP <= 0)

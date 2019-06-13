@@ -21,8 +21,9 @@ public class mobGenerator : MonoBehaviour {
     void Update () {
         //프레임의 증가에 따라 delta가 증가하면서 spawn에 도달시 새로운 몹 생성
         this.delta += Time.deltaTime;
-        if (count <= (GameDirector.stage == 1 ? 100 : 300) && this.delta > this.spawn)
+        if (count <= (GameDirector.stage == 1 ? 50 : 300) && this.delta > this.spawn)
         {
+            //1?뒤에 100임
             count++;
             this.delta = 0;
             GameObject mobPrefab = Instantiate(Resources.Load("Prefab/mobPrefab")) as GameObject;
@@ -40,8 +41,9 @@ public class mobGenerator : MonoBehaviour {
             BossPrefab.transform.position = new Vector3(px, 4.5f, 0);
         }
 
-        if (GameDirector.stage == 1 && count > 100)
+        if (GameDirector.stage == 1 && count > 50)
         {
+            //count > 100으로 나중에 바꿔
             SceneManager.LoadScene("StageScene");
             count = 0;
             GameDirector.HP = 10;

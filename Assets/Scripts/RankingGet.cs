@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using System.Data;
 using System.Net.Sockets;
 using System.Net;
 using System.Threading;
@@ -12,27 +13,27 @@ public class RankingGet : MonoBehaviour
 {
     NetworkStream m_Stream; //네트워크 스트림
     TcpClient m_Client;
-    StreamReader m_Read; //읽기
-    StreamWriter m_Write; //쓰기
-    private Thread m_thReader; //읽기 쓰레드
+    StreamReader m_Read;
+    StreamWriter m_Write;
+    private Thread m_thReader;
+    public DataTable dataTable;
+    string fileName;
+    string userName;
 
     bool m_bConnect; //서버 접속 플래그
     //m_bConnect, m_Client - client member
 
-    string fileName;
+    //string fileName;
 
     private void Start()
     {
-        //Execute in windows. bring user's name
-        string userName = (System.Security.Principal.WindowsIdentity.GetCurrent().Name).Split('\\')[1];
-        //저장할 파일 공간
+        //Execute in windows.bring user's name
+        userName = (System.Security.Principal.WindowsIdentity.GetCurrent().Name).Split('\\')[1];
         string rankPath = "C:/Users/" + userName + "/RhinoCrash";
         DirectoryInfo di = new DirectoryInfo(rankPath);
         if (!di.Exists)
             di.Create();
         fileName = rankPath + "/ranking.txt";
-
-        //Debug.Log("zzasdfdfasfasfsdfasdfafz");
 
         Connect();
     }
@@ -57,9 +58,14 @@ public class RankingGet : MonoBehaviour
     {
         FileStream fileStream = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.Read);
         StreamReader streamReader = new StreamReader(fileStream);
-        //Debug.Log("C:/Users/" + userName + "/RhinoCrash/ranking.txt");
-        int index = int.Parse(streamReader.ReadLine());
-        //Debug.Log(index.ToString());
+        Debug.Log("C:/Users/" + userName + "/RhinoCrash/ranking.txt");
+        string sindex = streamReader.ReadLine();
+        int index;
+        if (sindex != null)
+            index = int.Parse(sindex);
+        else
+            index = 0;
+        Debug.Log("index is " + index.ToString());
         streamReader.Close();
         fileStream.Close();
         if (!m_bConnect)
@@ -68,7 +74,7 @@ public class RankingGet : MonoBehaviour
             return;
         }
         m_Write.WriteLine("Filecheck");
-        m_Write.WriteLine(index.ToString());
+        m_Write.WriteLine(index);
         m_Write.Flush();
     }
 
@@ -78,8 +84,7 @@ public class RankingGet : MonoBehaviour
 
         try
         {
-            m_Client.Connect(IPAddress.Parse(/*"35.221.78.134"*/"127.0.0.1"), 7777);
-            Debug.Log("zzzzzzzzzzzzzzzzz");
+            m_Client.Connect(IPAddress.Parse("127.0.0.1"), 7777);
         }
         catch (Exception e)
         {
@@ -88,6 +93,7 @@ public class RankingGet : MonoBehaviour
             Debug.Log(e.Message);
             return;
         }
+        Debug.Log("connect to server");
         m_bConnect = true;
 
         m_Stream = m_Client.GetStream();
@@ -101,7 +107,7 @@ public class RankingGet : MonoBehaviour
 
     private void Receive()
     {
-        string receive = null;
+        string receive;
 
         while (m_bConnect)
         {
@@ -109,38 +115,27 @@ public class RankingGet : MonoBehaviour
             if (receive.Equals("Latest"))
             {
                 Debug.Log("Receive_Latest");
-                
-                Insert("PJH", 34.12232f);
+                //Insert("PJH", 34.12232f);
                 //Rankcheck(13f);
                 //Rank file in client is latest version. Change Scene to ranking.
             }
             else if (receive.Equals("Old"))
                 Receive_old();
-            //else if (receive.Equals("Select"))
-            //    Receive_Select();
-            //else if (receive.Equals("Datail"))
-            //    Receive_Datail();
-            //else if (receive.Equals("Download"))
-            //    Receive_Download();
         }
     }
 
     private void Receive_old()
     {
-        Debug.Log("Receive_old");
-        FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Write);
-        StreamWriter sw = new StreamWriter(fs);
+        FileStream fileStream = new FileStream(fileName, FileMode.Open, FileAccess.Write);
+        StreamWriter sw = new StreamWriter(fileStream);
 
-        string str;// = m_Read.ReadLine();
-        //Debug.Log(str);
-        while (!(str = m_Read.ReadLine()).Equals("end"))
+        string str;
+        while(!(str = m_Read.ReadLine()).Equals("end"))
         {
-            //Debug.Log(str);
             sw.WriteLine(str);
         }
-
-        sw.Close();
-        fs.Close();
+        sw.Flush();
+        sw.Close(); fileStream.Close();
     }
 
     public void Rankcheck(float score)

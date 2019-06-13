@@ -25,6 +25,7 @@ public class RankingRegistration : MonoBehaviour
     {
 
         ScoreText.text = PlayerController.score.ToString();
+        RankingText.text = RankingGet.checkRank.ToString(); //등수 만들고 싶기는해, 내가 추가한거
 
         //Initial_Input_Text.text = "A";
 

@@ -20,6 +20,8 @@ public class RankingGet : MonoBehaviour
     string fileName;
     string userName;
 
+    public static string checkRank; //이거 만들어준거
+
     bool m_bConnect; //서버 접속 플래그
                      //m_bConnect, m_Client - client member
 
@@ -151,6 +153,7 @@ public class RankingGet : MonoBehaviour
 
         string str = m_Read.ReadLine();
 
+        checkRank = str;
         Debug.Log(str);
         return;
     }

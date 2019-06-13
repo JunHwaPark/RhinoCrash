@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour {
     public static bool canMove = true;
     public static float currentTm = 0;
     public static float tempTm = 0;
-    bool pastStatus = true;
+    public static bool pastStatus = true; //아깐 bool만
     bool isChangedNow = false;
     Vector3[] linepos;
     Renderer rend;

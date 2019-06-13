@@ -84,7 +84,7 @@ public class RankingGet : MonoBehaviour
 
         try
         {
-            m_Client.Connect(IPAddress.Parse(/*"127.0.0.1"*/"192.168.123.120"), 7777);
+            m_Client.Connect(IPAddress.Parse("127.0.0.1"/*"192.168.123.120"*/), 7777);
         }
         catch (Exception e)
         {

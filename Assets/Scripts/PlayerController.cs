@@ -26,8 +26,6 @@ public class PlayerController : MonoBehaviour {
         linepos[3] = new Vector3(7.3f, -2.94f, 0);
         translucent = new Color(rend.material.color.r, rend.material.color.g, rend.material.color.b, 0.5f);
         nonTransparent = new Color(rend.material.color.r, rend.material.color.g, rend.material.color.b, 1f);
-
-
     }
 	
 	// Update is called once per frame

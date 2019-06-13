@@ -18,9 +18,8 @@ public class SendScore : MonoBehaviour
 
     public void sendInfo()
     {
-        RankingGet rg = GameObject.Find("RankingGet").GetComponent<RankingGet>();
         Debug.Log("보내는거 실행");
-        rg.Rankcheck(PlayerController.score);
+        call.callRankCheck(PlayerController.score);
         Debug.Log("보내버렸다" + PlayerController.score + "를");
     }
 }

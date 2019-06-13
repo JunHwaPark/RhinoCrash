@@ -21,9 +21,14 @@ public class RankingGet : MonoBehaviour
     string userName;
 
     bool m_bConnect; //서버 접속 플래그
-    //m_bConnect, m_Client - client member
+                     //m_bConnect, m_Client - client member
 
     //string fileName;
+
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
 
     private void Start()
     {
@@ -41,6 +46,21 @@ public class RankingGet : MonoBehaviour
     private void OnApplicationQuit()
     {
         //끝내는 코드
+        m_Write.WriteLine("Disconnect");
+        m_Write.Flush();
+        if (!m_bConnect)
+            return;
+
+        m_bConnect = false;
+
+        m_Read.Close();
+        m_Write.Close();
+        m_Stream.Close();
+        m_thReader.Abort();
+    }
+
+    public void Disconnect()
+    {
         m_Write.WriteLine("Disconnect");
         m_Write.Flush();
         if (!m_bConnect)
@@ -84,7 +104,7 @@ public class RankingGet : MonoBehaviour
 
         try
         {
-            m_Client.Connect(IPAddress.Parse(/*"127.0.0.1"*/"192.168.123.120"), 7777);
+            m_Client.Connect(IPAddress.Parse("127.0.0.1"), 7777);
         }
         catch (Exception e)
         {
@@ -100,28 +120,6 @@ public class RankingGet : MonoBehaviour
 
         m_Read = new StreamReader(m_Stream);
         m_Write = new StreamWriter(m_Stream);
-
-        m_thReader = new Thread(new ThreadStart(Receive));
-        m_thReader.Start();
-    }
-
-    private void Receive()
-    {
-        string receive;
-
-        while (m_bConnect)
-        {
-            receive = m_Read.ReadLine();
-            if (receive.Equals("Latest"))
-            {
-                Debug.Log("Receive_Latest");
-                //Insert("PJH", 34.12232f);
-                //Rankcheck(13f);
-                //Rank file in client is latest version. Change Scene to ranking.
-            }
-            else if (receive.Equals("Old"))
-                Receive_old();
-        }
     }
 
     private void Receive_old()
@@ -136,20 +134,35 @@ public class RankingGet : MonoBehaviour
         }
         sw.Flush();
         sw.Close(); fileStream.Close();
+        Debug.Log("Update rank file");
     }
 
     public void Rankcheck(float score)
     {
+        ShowName();
+        string status = m_Read.ReadLine();
+        if (status.Equals("Old"))
+        {
+            Receive_old();
+        }
         m_Write.WriteLine("Rankcheck");
         m_Write.WriteLine(score.ToString());
         m_Write.Flush();
 
-        Debug.Log(m_Read.ReadLine());
+        string str = m_Read.ReadLine();
 
+        Debug.Log(str);
+        return;
     }
 
     public void Insert(string name, float score)
     {
+        ShowName();
+        string status = m_Read.ReadLine();
+        if (status.Equals("Old"))
+        {
+            Receive_old();
+        }
         m_Write.WriteLine("Insert");
         m_Write.WriteLine(name);
         m_Write.WriteLine(score.ToString());

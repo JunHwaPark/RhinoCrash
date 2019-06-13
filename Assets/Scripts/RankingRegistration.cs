@@ -109,9 +109,8 @@ public class RankingRegistration : MonoBehaviour
 
     public void sendInfo()
     {
-        RankingGet rg = GameObject.Find("RankingGet").GetComponent<RankingGet>();
-        Debug.Log("i'm silhang");
-        rg.Insert(Name, PlayerController.score);
+        //Debug.Log("i'm silhang");
+        //rg.Insert(Name, PlayerController.score);
     }
 
 }

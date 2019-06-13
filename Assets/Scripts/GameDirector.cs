@@ -12,7 +12,7 @@ public class GameDirector : MonoBehaviour {
     GameObject skillGauge;
     public GameObject playerRhino;
     public static int stage = 0;
-    public static int HP = 10;
+    public static int HP = 10; 
 
     public static int skill = 0; //for count yellow heart
 
@@ -44,7 +44,9 @@ public class GameDirector : MonoBehaviour {
         changeColor();
         this.hpGauge.GetComponent<Image>().fillAmount -= 0.1f;
         this.skillGauge.GetComponent<Image>().fillAmount += 0.125f;
-        //GameDirector.HP--;
+        GameDirector.HP--;
+
+        SoundManager_GameScene.instance.PlaySE("Stump"); //효과음 넣기
 
         if (skill < 8)
         {
@@ -67,11 +69,18 @@ public class GameDirector : MonoBehaviour {
 
     public void Dead()
     {
-        SceneManager.LoadScene("DeadScene");
         mobGenerator.count = 0;
         ItemController.itemcount = 0;
         GameDirector.stage = 0;
         GameDirector.HP = 10;
+        ComboGenerator.Count = 0;
+
+        //ComboGenerator.stop = false;
+        ComboGenerator.order = 0;
+
+        SceneManager.LoadScene("DeadScene");
+        SoundManager_GameScene.instance.PlaySE("Death"); //죽으면 소리날거
+        
     }
 
     public void IncreaseHp()

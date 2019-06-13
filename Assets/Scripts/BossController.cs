@@ -13,6 +13,8 @@ public class BossController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        SoundManager_GameScene.instance.PlaySE("Boss");
+
         this.player = GameObject.Find("player"); //player 오브젝트 찾아서 객체로 추가
         this.downVector = new Vector3(0.03f, 0.03f, 0);
         speed = GameDirector.stage == 1 ? -0.02f : -0.04f;

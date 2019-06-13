@@ -8,7 +8,7 @@ public class ComboGenerator : MonoBehaviour
     public List<GameObject> arrowList;
     
     public bool stop = false;
-    public int order = 0;
+    public static int order = 0;
 
     public static float Count = 0;
     private void Update()
@@ -75,6 +75,7 @@ public class ComboGenerator : MonoBehaviour
 
             if (Count > 7)
             {
+                
                 for (int i = 0; i < arrowList.Count; i++)
                     Destroy(arrowList[i]);
                 arrowList.Clear();
@@ -86,6 +87,8 @@ public class ComboGenerator : MonoBehaviour
                 GameObject director = GameObject.Find("GameDirector");
                 for (int i = 0; i < 4; i++)
                     director.GetComponent<GameDirector>().DecreaseHp();
+
+                PlayerController.score += 7; //만약 7초 넘으면 점수 추가
             }
         }
     }

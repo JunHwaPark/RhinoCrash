@@ -6,15 +6,18 @@ using System.Net.Sockets;
 using System.Net;
 using System.Threading;
 
+using System;
+
 public class RankingGet : MonoBehaviour
 {
-    NetworkStream m_Stream;
+    NetworkStream m_Stream; //네트워크 스트림
     TcpClient m_Client;
-    StreamReader m_Read;
-    StreamWriter m_Write;
-    private Thread m_thReader;
+    StreamReader m_Read; //읽기
+    StreamWriter m_Write; //쓰기
+    private Thread m_thReader; //읽기 쓰레드
 
-    bool m_bConnect;
+    bool m_bConnect; //서버 접속 플래그
+    //m_bConnect, m_Client - client member
 
     string fileName;
 
@@ -22,17 +25,21 @@ public class RankingGet : MonoBehaviour
     {
         //Execute in windows. bring user's name
         string userName = (System.Security.Principal.WindowsIdentity.GetCurrent().Name).Split('\\')[1];
+        //저장할 파일 공간
         string rankPath = "C:/Users/" + userName + "/RhinoCrash";
         DirectoryInfo di = new DirectoryInfo(rankPath);
         if (!di.Exists)
             di.Create();
         fileName = rankPath + "/ranking.txt";
 
+        //Debug.Log("zzasdfdfasfasfsdfasdfafz");
+
         Connect();
     }
 
     private void OnApplicationQuit()
     {
+        //끝내는 코드
         m_Write.WriteLine("Disconnect");
         m_Write.Flush();
         if (!m_bConnect)
@@ -71,11 +78,14 @@ public class RankingGet : MonoBehaviour
 
         try
         {
-            m_Client.Connect(IPAddress.Parse("35.221.78.134"/*"127.0.0.1"*/), 7777);
+            m_Client.Connect(IPAddress.Parse(/*"35.221.78.134"*/"127.0.0.1"), 7777);
+            Debug.Log("zzzzzzzzzzzzzzzzz");
         }
-        catch
+        catch (Exception e)
         {
             m_bConnect = false;
+            Debug.Log("error_abcde");
+            Debug.Log(e.Message);
             return;
         }
         m_bConnect = true;
@@ -99,6 +109,7 @@ public class RankingGet : MonoBehaviour
             if (receive.Equals("Latest"))
             {
                 Debug.Log("Receive_Latest");
+                
                 Insert("PJH", 34.12232f);
                 //Rankcheck(13f);
                 //Rank file in client is latest version. Change Scene to ranking.
@@ -139,6 +150,7 @@ public class RankingGet : MonoBehaviour
         m_Write.Flush();
 
         Debug.Log(m_Read.ReadLine());
+
     }
 
     public void Insert(string name, float score)

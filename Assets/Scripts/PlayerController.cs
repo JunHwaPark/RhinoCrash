@@ -124,9 +124,11 @@ public class PlayerController : MonoBehaviour {
                     //HealingController.healingcount -= 1; //하나 줄여주고
                     //Destroy(GameObject.Find("HealingController").GetComponent<HealingController>().HealingList[HealingController.healingcount]);
 
-                    
+
                     //GameObject.Find("HealingController").GetComponent<HealingController>().HealingList[HealingController.healingcount].SetActive(false);
                     //Destroy(GameObject.Find("HealingController").GetComponent<HealingController>().HealingList[HealingController.healingcount]);
+
+                    SoundManager_GameScene.instance.PlaySE("Drinking"); //물약 마시는 효과음
 
                     GameObject skill = GameObject.Find("SkillController");
                     skill.GetComponent<SkillController>().Skillhealing();

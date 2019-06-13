@@ -21,7 +21,7 @@ public class mobGenerator : MonoBehaviour {
     void Update () {
         //프레임의 증가에 따라 delta가 증가하면서 spawn에 도달시 새로운 몹 생성
         this.delta += Time.deltaTime;
-        if (count <= (GameDirector.stage == 1 ? 50 : 300) && this.delta > this.spawn)
+        if (count <= (GameDirector.stage == 1 ? 100 : 300) && this.delta > this.spawn)
         {
             //1?뒤에 100임
             count++;
@@ -41,7 +41,7 @@ public class mobGenerator : MonoBehaviour {
             BossPrefab.transform.position = new Vector3(px, 4.5f, 0);
         }
 
-        if (GameDirector.stage == 1 && count > 50)
+        if (GameDirector.stage == 1 && count > 100)
         {
             //count > 100으로 나중에 바꿔
             SceneManager.LoadScene("StageScene");
@@ -49,14 +49,14 @@ public class mobGenerator : MonoBehaviour {
             GameDirector.HP = 10;
             //GameObject director = GameObject.Find("GameDirector");
 
-            SceneManager.LoadScene("EndingScene"); //이거 나중에 지워야해
+            //SceneManager.LoadScene("EndingScene"); //이거 나중에 지워야해
         }
 
         //이거나중에 코드 풀어줘야해
-        //if (GameDirector.stage == 2 && count > 350)
-        //{
-        //    SceneManager.LoadScene("EndingScene");
+        if (GameDirector.stage == 2 && count > 350)
+        {
+            SceneManager.LoadScene("EndingScene");
 
-        //}
+        }
     }
 }

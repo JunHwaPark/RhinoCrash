@@ -741,8 +741,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_MethodName: callRankCheck
+      - m_Target: {fileID: 1288261744}
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -930,8 +930,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmSounds:
-    soundName: 2002
-    clip: {fileID: 8300000, guid: 725f93fa994c1e548914282ff8174894, type: 3}
+    soundName: startbgm
+    clip: {fileID: 8300000, guid: f57f50805b140a443b2e56264f779910, type: 3}
   bgmPlayer: {fileID: 1406776726}
 --- !u!4 &1406776728
 Transform:

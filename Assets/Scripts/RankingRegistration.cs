@@ -107,6 +107,7 @@ public class RankingRegistration : MonoBehaviour
 
     }
 
+
 //<<<<<<< HEAD
 //    //public void sendInfo()
 //    //{
